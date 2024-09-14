@@ -14,6 +14,8 @@ Router::post('/admin/ads/store', fn() => (new AdController())->store());
 Router::get('/admin/ads/update/{id}', fn(int $id) => (new AdController())->update($id));
 Router::patch('/admin/ads/update/{id}', fn(int $id) => (new AdController())->store($id));
 Router::delete('/ads/delete/{id}', fn(int $id) => (new AdController())->delete($id));
+Router::get('/about', fn() => loadView('/dashboard/about'));
+Router::get('/branches', fn() => (new \Controllers\BranchController())->index(), 'auth');
 
 // Statuses
 Router::get('/status/create', fn() => loadView('dashboard/create-status'));
