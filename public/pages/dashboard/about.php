@@ -33,6 +33,7 @@ loadPartials('navbar');
             </div>
         </div>
         <!-- End Mobile Toggle -->
+
 </nav><!--end header-->
 <!-- End Navbar -->
 
