@@ -17,15 +17,19 @@ class User
 
     public function createUser(
         string $username,
+        string $email,
         string $position,
+        string $password,
         string $gender,
         string $phone
     ): false|array {
-        $query = "INSERT INTO users (username, position, gender, phone, created_at)
-                  VALUES (:username, :position, :gender, :phone, NOW())";
+        $query = "INSERT INTO users (username, email, position, password, gender, phone, created_at)
+                  VALUES (:username, :email, :position, :password, :gender, :phone, NOW())";
         $stmt  = $this->pdo->prepare($query);
         $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
         $stmt->bindParam(':position', $position);
+        $stmt->bindParam(':password', $password);
         $stmt->bindParam(':gender', $gender);
         $stmt->bindParam(':phone', $phone);
         $stmt->execute();
@@ -82,5 +86,17 @@ class User
         $stmt  = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
+    }
+
+    public function isUserExists(string $username):bool
+    {
+        if (isset($_POST['name'])) {
+            $username = $_POST['name'];
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = :username");
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            return (bool)$stmt->fetch();
+        }
+        return false;
     }
 }
